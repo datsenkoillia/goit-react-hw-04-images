@@ -7,20 +7,20 @@ export class PixabayAPI {
   #BASE_URL = 'https://pixabay.com/api/';
   #API_KEY = '34744066-258cb09888b79ff1454a5a6f0';
 
-  page = 1;
+  // page = 1;
   per_page = 12;
-  q = null;
+  // q = null;
 
-  async fetchPhotos() {
+  async fetchPhotos(page, searchQuery) {
     try {
       return await axios.get(`${this.#BASE_URL}`, {
         params: {
           key: this.#API_KEY,
-          q: this.q,
+          q: searchQuery,
           orientation: 'horizontal',
           image_type: 'photo',
           safesearch: true,
-          page: this.page,
+          page: page,
           per_page: this.per_page,
         },
       });

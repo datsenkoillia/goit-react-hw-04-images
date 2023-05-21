@@ -16,47 +16,17 @@ export function App() {
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [forModalLink, setForModalLink] = useState('');
+  const [isListShow, setIsListShow] = useState(false);
+
 
   useEffect(() => {
-    if (!searchQuery || page > 1) {
+    if (!isListShow) {
       return;
     }
 
-    pixabayApi.page = page;
-    pixabayApi.q = searchQuery;
-
-    async function getFirstPageData() {
+    async function getData() {
       try {
-        const { data } = await pixabayApi.fetchPhotos();
-        if (data.total === 0) {
-          alert(
-            'Sorry, there are no images matching your search query. Please try again.'
-          );
-          return;
-        }
-        const newCards = data.hits;
-        setCards(newCards);
-      } catch (error) {
-        console.log(error);
-        alert('Something went wrong.');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getFirstPageData();
-  }, [page, searchQuery]);
-
-  useEffect(() => {
-    if (page === 1) {
-      return;
-    }
-
-    pixabayApi.page = page;
-
-    async function getNewPageData() {
-      try {
-        const { data } = await pixabayApi.fetchPhotos();
+        const { data } = await pixabayApi.fetchPhotos(page, searchQuery);
         if (data.total === 0) {
           alert(
             'Sorry, there are no images matching your search query. Please try again.'
@@ -73,8 +43,8 @@ export function App() {
       }
     }
 
-    getNewPageData();
-  }, [page]);
+    getData();
+  }, [isListShow, page, searchQuery]);
 
   const addPage = () => {
     setLoading(true);
@@ -99,6 +69,7 @@ export function App() {
     setPage(1);
     setSearchQuery(searchText);
     setCards([]);
+    setIsListShow(true);
   };
 
   return (
