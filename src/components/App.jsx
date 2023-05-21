@@ -35,7 +35,6 @@ export function App() {
           return;
         }
         const newCards = data.hits;
-        setLoading(false);
         setCards(newCards);
       } catch (error) {
         console.log(error);
@@ -65,7 +64,6 @@ export function App() {
           return;
         }
         const newCards = data.hits;
-        setLoading(false);
         setCards(prevState => [...prevState, ...newCards]);
       } catch (error) {
         console.log(error);
