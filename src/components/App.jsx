@@ -16,11 +16,10 @@ export function App() {
   const [page, setPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [forModalLink, setForModalLink] = useState('');
-  const [isListShow, setIsListShow] = useState(false);
-
+  const [isCardsShow, setIsCardsShow] = useState(false);
 
   useEffect(() => {
-    if (!isListShow) {
+    if (!isCardsShow) {
       return;
     }
 
@@ -44,7 +43,7 @@ export function App() {
     }
 
     getData();
-  }, [isListShow, page, searchQuery]);
+  }, [isCardsShow, page, searchQuery]);
 
   const addPage = () => {
     setLoading(true);
@@ -69,7 +68,7 @@ export function App() {
     setPage(1);
     setSearchQuery(searchText);
     setCards([]);
-    setIsListShow(true);
+    setIsCardsShow(true);
   };
 
   return (
